@@ -1,0 +1,116 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+def monte_carlo_1d(f, a, b, n):
+    x = np.random.uniform(a, b, n)
+    y = f(x)
+    integral = (b - a) * np.mean(y)
+    return integral
+# Експоненціальна функція
+def f3(x):
+    return np.exp(-x)
+
+# Точне значення інтеграла
+exact = 1 - np.exp(-2)
+
+for n in n_values:
+    # Обчислення методом Монте-Карло
+    mc = monte_carlo_1d(f3, 0, 2, n)
+
+    print(f"n={n:5d}, "
+        f"MC={mc:.6f}, "
+        f"Exact={exact:.6f}, "
+        f"Error={abs(exact-mc):.6f}")
+
+def monte_carlo_exp_visual(n):
+    """
+    Метод Монте-Карло для обчислення інтеграла
+    ∫₀² e^(−x) dx
+    з графічною візуалізацією
+    """
+
+    # Межі інтегрування
+    a = 0
+    b = 2
+
+    # Максимум функції на [0,2]
+    ymax = f3(0)
+
+    # Генеруємо випадкові x
+    x_rand = np.random.uniform(a, b, n)
+
+    # Генеруємо випадкові y
+    y_rand = np.random.uniform(0, ymax, n)
+
+    # Перевірка: чи точка лежить під графіком
+    inside = y_rand <= f3(x_rand)
+
+    # Площа прямокутника
+    area = (b - a) * ymax
+
+    # Формула Монте-Карло
+    integral = area * np.sum(inside) / n
+
+    print(f"Кількість точок n = {n}")
+    print(f"Monte Carlo = {integral:.6f}")
+
+    # ВІЗУАЛІЗАЦІЯ
+    x = np.linspace(a, b, 500)
+
+    plt.figure(figsize=(10, 6))
+
+    # Графік функції
+    plt.plot(
+        x,
+        f3(x),
+        linewidth=2,
+        label='f(x)=e^(-x)'
+    )
+
+    # Зелені точки — під графіком
+    plt.scatter(
+        x_rand[inside],
+        y_rand[inside],
+        color='green',
+        s=8,
+        label='Точки під графіком'
+    )
+
+    # Червоні — поза графіком
+    plt.scatter(
+        x_rand[~inside],
+        y_rand[~inside],
+        color='red',
+        s=8,
+        label='Точки поза графіком'
+    )
+
+    plt.xlim(a, b)
+    plt.ylim(0, ymax)
+
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+
+    plt.title(
+        "Візуалізація методу Монте-Карло\n"
+        "для інтеграла ∫₀² e^(-x) dx"
+    )
+
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+    return integral
+
+# Тут можна змінювати кількість точок
+n = 10000
+
+result = monte_carlo_exp_visual(n)
+
+
+# Точне значення інтеграла
+exact = 1 - np.exp(-2)
+
+print(f"Точне значення = {exact:.6f}")
+print(f"Похибка = {abs(exact - result):.6f}")
