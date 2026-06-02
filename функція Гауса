@@ -1,0 +1,140 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+def monte_carlo_1d(f, a, b, n):
+    x = np.random.uniform(a, b, n)
+    y = f(x)
+    integral = (b - a) * np.mean(y)
+    return integral
+
+#візуалізація функції подвійного інтегрлу
+def monte_carlo_2d_visual(n):
+    """
+    Метод Монте-Карло для обчислення
+    подвійного інтеграла
+    ∫∫(x+y)dxdy на квадраті [0,1]×[0,1]
+    """
+
+    # Генеруємо n випадкових значень x
+    x = np.random.uniform(0, 1, n)
+
+    # Генеруємо n випадкових значень y
+    y = np.random.uniform(0, 1, n)
+
+    # Обчислюємо значення функції f(x,y)=x+y
+    f = x + y
+
+    # Площа області інтегрування:
+    # квадрат [0,1]×[0,1]
+    area = 1
+
+    # Формула Монте-Карло
+    integral = area * np.mean(f)
+    print(f"Кількість точок n = {n}")
+    print(f"Наближене значення інтеграла = {integral:.6f}")
+-
+    # ВІЗУАЛІЗАЦІЯ
+    plt.figure(figsize=(6, 6))
+
+    # Відображення випадкових точок
+    plt.scatter(
+        x,
+        y,
+        s=8,
+        alpha=0.6
+    )
+
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
+
+    plt.xlabel("x")
+    plt.ylabel("y")
+
+    plt.title(
+        "Візуалізація методу Монте-Карло\n"
+        "для подвійного інтеграла на [0,1]×[0,1]"
+    )
+
+    plt.grid(True)
+    plt.show()
+
+    return integral
+
+# Тут можна змінювати кількість точок вручну
+
+n = 5000
+
+result = monte_carlo_2d_visual(n)
+
+
+# Точне значення інтеграла
+exact = 1
+
+print(f"Точне значення = {exact:.6f}")
+print(f"Похибка = {abs(exact - result):.6f}")
+#візуалізація функції подвійного інтегрлу
+def monte_carlo_2d_visual(n):
+    """
+    Метод Монте-Карло для обчислення
+    подвійного інтеграла
+    ∫∫(x+y)dxdy на квадраті [0,1]×[0,1]
+    """
+
+    # Генеруємо n випадкових значень x
+    x = np.random.uniform(0, 1, n)
+
+    # Генеруємо n випадкових значень y
+    y = np.random.uniform(0, 1, n)
+
+    # Обчислюємо значення функції f(x,y)=x+y
+    f = x + y
+
+    # Площа області інтегрування:
+    # квадрат [0,1]×[0,1]
+    area = 1
+
+    # Формула Монте-Карло
+    integral = area * np.mean(f)
+    print(f"Кількість точок n = {n}")
+    print(f"Наближене значення інтеграла = {integral:.6f}")
+-
+    # ВІЗУАЛІЗАЦІЯ
+    plt.figure(figsize=(6, 6))
+
+    # Відображення випадкових точок
+    plt.scatter(
+        x,
+        y,
+        s=8,
+        alpha=0.6
+    )
+
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
+
+    plt.xlabel("x")
+    plt.ylabel("y")
+
+    plt.title(
+        "Візуалізація методу Монте-Карло\n"
+        "для подвійного інтеграла на [0,1]×[0,1]"
+    )
+
+    plt.grid(True)
+    plt.show()
+
+    return integral
+
+# Тут можна змінювати кількість точок вручну
+
+n = 5000
+
+result = monte_carlo_2d_visual(n)
+
+
+# Точне значення інтеграла
+exact = 1
+
+print(f"Точне значення = {exact:.6f}")
+print(f"Похибка = {abs(exact - result):.6f}")
