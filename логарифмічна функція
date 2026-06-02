@@ -1,0 +1,55 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+def monte_carlo_1d(f, a, b, n):
+    x = np.random.uniform(a, b, n)
+    y = f(x)
+    integral = (b - a) * np.mean(y)
+    return integral
+# Логарифмічна функція
+def f2(x):
+    return np.log(x)
+# xlnx - x
+exact = 2 * np.log(2) - 1
+
+
+for n in n_values:
+
+    # Monte Carlo оцінка
+    mc = monte_carlo_1d(f2, 1, 2, n)
+
+    # Вивід результату
+    print(f"n={n:5d}, "
+        f"MC={mc:.6f}, "
+        f"Exact={exact:.6f}, "
+        f"Error={abs(exact-mc):.6f}")
+def monte_carlo_log(n):
+
+    a = 1
+    b = 2
+    ymax = np.log(2)
+
+    x_rand = np.random.uniform(a, b, n)
+    y_rand = np.random.uniform(0, ymax, n)
+
+    inside = y_rand <= f2(x_rand)
+
+    area = (b - a) * ymax
+
+    integral = area * np.sum(inside) / n
+
+    print("Інтеграл ∫₁² ln(x) dx =", integral)
+
+    x = np.linspace(a, b, 500)
+
+    plt.figure(figsize=(8, 5))
+    plt.plot(x, f2(x))
+    plt.scatter(x_rand[inside], y_rand[inside], s=5)
+    plt.scatter(x_rand[~inside], y_rand[~inside], s=5)
+    plt.grid()
+    plt.show()
+
+
+n = 5000
+monte_carlo_log(n)
